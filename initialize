@@ -1,0 +1,32 @@
+#Setting up the Server (Flask)
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return 'Welcome to the Smart Home System'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+#Handling Device Communication (Cayenne MQTT)
+from cayenne.client import CayenneMQTTClient
+
+client = CayenneMQTTClient()
+client.begin('username', 'password', 'client_id')
+
+def on_message(message):
+    print("Message received: " + str(message.payload))
+
+client.on_message = on_message
+
+while True:
+    client.loop()
+#data preprocessing
+def process_data(raw_data):
+    # Parse raw data
+    # Convert to structured format
+    processed_data = ...
+    return processed_data
+
